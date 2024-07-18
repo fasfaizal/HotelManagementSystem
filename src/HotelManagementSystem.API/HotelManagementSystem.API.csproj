@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\HotelManagementSystem.Common\HotelManagementSystem.Common.csproj" />
+    <ProjectReference Include="..\HotelManagementSystem.DataAccess\HotelManagementSystem.DataAccess.csproj" />
+    <ProjectReference Include="..\HotelManagementSystem.Services\HotelManagementSystem.Services.csproj" />
   </ItemGroup>
 
 </Project>
