@@ -5,5 +5,6 @@ namespace HotelManagementSystem.Common.Interfaces.DataAccess
     public interface ICategoriesRepo
     {
         Task CreateAsync(Category category);
+        Task<Category> GetByIdAsync(string id);
     }
 }

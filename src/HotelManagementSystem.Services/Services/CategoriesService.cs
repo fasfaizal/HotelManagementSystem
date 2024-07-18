@@ -40,5 +40,18 @@ namespace HotelManagementSystem.Services.Services
             await _categoriesRepo.CreateAsync(category);
             return category;
         }
+
+        /// <summary>
+        /// Retrieves a category asynchronously from the repository based on its ID.
+        /// </summary>
+        /// <param name="id">The ID of the category to retrieve.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the category object
+        /// matching the provided ID, or null if no category is found.
+        /// </returns>
+        public async Task<Category> GetByIdAsync(string id)
+        {
+            return await _categoriesRepo.GetByIdAsync(id);
+        }
     }
 }

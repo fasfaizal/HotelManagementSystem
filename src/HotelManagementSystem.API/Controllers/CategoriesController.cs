@@ -23,13 +23,31 @@ namespace HotelManagementSystem.API.Controllers
         /// <returns>
         /// A 201 Created response with the created category object.
         /// </returns>
-        /// <response code="201">Returns the created category object.</response>
-        /// <response code="400">If the categoryRequest is invalid.</response>
         [HttpPost]
         public async Task<IActionResult> Post(CategoryRequest categoryRequest)
         {
             var category = await _categoriesService.CreateAsync(categoryRequest);
             return StatusCode(StatusCodes.Status201Created, category);
+        }
+
+
+        /// <summary>
+        /// Retrieves a category by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the category to retrieve.</param>
+        /// <returns>
+        /// A 200 OK response with the category object matching the provided ID,
+        /// or a 404 Not Found response if no category is found.
+        /// </returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            var category = await _categoriesService.GetByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
         }
     }
 }
