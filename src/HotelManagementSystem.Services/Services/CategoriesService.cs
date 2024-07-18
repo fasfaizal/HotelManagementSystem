@@ -23,6 +23,12 @@ namespace HotelManagementSystem.Services.Services
         /// </returns>
         public async Task<Category> CreateAsync(CategoryRequest categoryRequest)
         {
+            if (categoryRequest == null)
+            {
+                throw new ArgumentNullException(nameof(categoryRequest));
+            }
+
+            // Create new category and save
             var category = new Category
             {
                 BedType = categoryRequest.BedType,
