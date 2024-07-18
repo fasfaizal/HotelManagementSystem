@@ -37,5 +37,15 @@ namespace HotelManagementSystem.DataAccess.Repositories
         {
             return await _dbContext.Categories.Find(options => options.Id == id).FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Deletes a category from the database asynchronously based on its ID.
+        /// </summary>
+        /// <param name="id">The ID of the category to delete.</param>
+        /// <returns>A task that represents the asynchronous delete operation.</returns>
+        public async Task DeleteAsync(string id)
+        {
+            await _dbContext.Categories.DeleteOneAsync(o => o.Id == id);
+        }
     }
 }

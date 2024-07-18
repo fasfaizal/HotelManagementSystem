@@ -53,5 +53,16 @@ namespace HotelManagementSystem.Services.Services
         {
             return await _categoriesRepo.GetByIdAsync(id);
         }
+
+
+        /// <summary>
+        /// Deletes a category asynchronously from the repository based on its ID.
+        /// </summary>
+        /// <param name="id">The ID of the category to delete.</param>
+        /// <returns>A task that represents the asynchronous delete operation.</returns>
+        public async Task DeleteAsync(string id)
+        {
+            await _categoriesRepo.DeleteAsync(id);
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace HotelManagementSystem.Common.Interfaces.Services
     {
         Task<Category> CreateAsync(CategoryRequest categoryRequest);
         Task<Category> GetByIdAsync(string id);
+        Task DeleteAsync(string id);
     }
 }

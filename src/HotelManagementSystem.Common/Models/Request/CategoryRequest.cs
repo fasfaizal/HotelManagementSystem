@@ -8,7 +8,7 @@ namespace HotelManagementSystem.Common.Models.Request
         [Required]
         [MinLength(3), MaxLength(50)]
         public string CategoryName { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required]
         [Range(1, 20)]
         public int Capacity { get; set; }
