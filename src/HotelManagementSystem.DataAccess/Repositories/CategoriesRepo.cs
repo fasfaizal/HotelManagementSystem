@@ -15,6 +15,7 @@ namespace HotelManagementSystem.DataAccess.Repositories
 
         }
 
+
         /// <summary>
         /// Inserts a new category into the database asynchronously.
         /// </summary>
@@ -38,6 +39,7 @@ namespace HotelManagementSystem.DataAccess.Repositories
             return await _dbContext.Categories.Find(options => options.Id == id).FirstOrDefaultAsync();
         }
 
+
         /// <summary>
         /// Deletes a category from the database asynchronously based on its ID.
         /// </summary>
@@ -46,6 +48,23 @@ namespace HotelManagementSystem.DataAccess.Repositories
         public async Task DeleteAsync(string id)
         {
             await _dbContext.Categories.DeleteOneAsync(o => o.Id == id);
+        }
+
+
+        /// <summary>
+        /// Retrieves a paginated list of categories from the database asynchronously.
+        /// </summary>
+        /// <param name="pageNumber">The page number to retrieve. Must be a positive integer.</param>
+        /// <param name="pageSize">The number of categories per page. Must be a positive integer.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains a list of categories.
+        /// </returns>
+        public async Task<List<Category>> GetCategoriesAsync(int pageNumber, int pageSize)
+        {
+            return await _dbContext.Categories.Find(o => true)
+                                              .Skip((pageNumber - 1) * pageSize)
+                                              .Limit(pageSize)
+                                              .ToListAsync();
         }
     }
 }

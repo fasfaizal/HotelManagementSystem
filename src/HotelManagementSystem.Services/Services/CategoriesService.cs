@@ -1,4 +1,5 @@
 ﻿using HotelManagementSystem.Common.Entities;
+using HotelManagementSystem.Common.Exceptions;
 using HotelManagementSystem.Common.Interfaces.DataAccess;
 using HotelManagementSystem.Common.Interfaces.Services;
 using HotelManagementSystem.Common.Models.Request;
@@ -63,6 +64,27 @@ namespace HotelManagementSystem.Services.Services
         public async Task DeleteAsync(string id)
         {
             await _categoriesRepo.DeleteAsync(id);
+        }
+
+
+        /// <summary>
+        /// Retrieves a paginated list of categories asynchronously.
+        /// </summary>
+        /// <param name="pageNumber">The page number to retrieve. Must be a positive integer.</param>
+        /// <param name="pageSize">The number of categories per page. Must be a positive integer.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains a list of categories.
+        /// </returns>
+        /// <exception cref="ApiException">
+        /// Thrown when the pageNumber or pageSize is less than 1.
+        /// </exception>
+        public async Task<List<Category>> GetCategoriesAsync(int pageNumber, int pageSize)
+        {
+            if (pageNumber < 1 || pageSize < 1)
+            {
+                throw new ApiException(System.Net.HttpStatusCode.BadRequest, "Parameters should be positive");
+            }
+            return await _categoriesRepo.GetCategoriesAsync(pageNumber, pageSize);
         }
     }
 }

@@ -57,12 +57,26 @@ namespace HotelManagementSystem.API.Controllers
         /// <returns>
         /// A 200 OK response if the deletion is successful.
         /// </returns>
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             await _categoriesService.DeleteAsync(id);
             return Ok();
+        }
+
+        /// <summary>
+        /// Retrieves a paginated list of categories.
+        /// </summary>
+        /// <param name="pageNumber">The page number to retrieve. Defaults to 1.</param>
+        /// <param name="pageSize">The number of categories per page. Defaults to 20.</param>
+        /// <returns>
+        /// A 200 OK response with a paginated list of categories.
+        /// </returns>
+        [HttpGet]
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 20)
+        {
+            var categories = await _categoriesService.GetCategoriesAsync(pageNumber, pageSize);
+            return Ok(categories);
         }
     }
 }
