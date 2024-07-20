@@ -99,5 +99,30 @@ namespace HotelManagementSystem.API.Tests.Controllers
             var notFoundResult = Assert.IsType<NotFoundResult>(result);
             Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
         }
+
+        [Fact]
+        public async Task Get_ValidRequest_ReturnsOkResponseWithCategories()
+        {
+            // Arrange
+            var pageNumber = 1;
+            var pageSize = 20;
+            var categories = new List<Category>
+            {
+                new Category {  },
+                new Category {}
+            };
+
+            _mockCategoriesService
+                .Setup(service => service.GetCategoriesAsync(pageNumber, pageSize))
+                .ReturnsAsync(categories);
+
+            // Act
+            var result = await _controller.Get(pageNumber, pageSize);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+            Assert.Equal(categories, okResult.Value);
+        }
     }
 }
