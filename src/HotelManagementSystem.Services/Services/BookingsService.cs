@@ -112,6 +112,17 @@ namespace HotelManagementSystem.Services.Services
         /// </returns>
         public async Task<bool> IsAvailable(string categoryId, DateTime startDate, DateTime endDate)
         {
+            // Validate start date and end date
+            if (startDate < DateTime.Today || endDate < DateTime.Today)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, "Start date and end date should not be in the past");
+            }
+            if (endDate < startDate)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, "Start date should be before end date");
+            }
+
+            // Check availability
             var availableRooms = await GetAvailableRooms(categoryId, startDate, endDate);
             if (availableRooms == null || availableRooms.Count == 0)
             {
