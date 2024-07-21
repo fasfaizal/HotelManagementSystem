@@ -24,6 +24,9 @@ builder.Services.AddProblemDetails();
 // Add configurations
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 
+//Add logging
+builder.Services.AddLogging(configure => configure.AddConsole());
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

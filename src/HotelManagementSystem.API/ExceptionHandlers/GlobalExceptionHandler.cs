@@ -7,8 +7,16 @@ namespace HotelManagementSystem.API.ExceptionHandlers
 {
     public class GlobalExceptionHandler : IExceptionHandler
     {
+        private readonly ILogger<GlobalExceptionHandler> _logger;
+        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+        {
+            _logger = logger;
+        }
+
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
+            _logger.LogError(exception, $"Error: {exception.Message}");
+
             // Create custom response
             var details = new ProblemDetails()
             {
