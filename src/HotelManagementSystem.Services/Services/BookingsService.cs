@@ -20,6 +20,16 @@ namespace HotelManagementSystem.Services.Services
             _roomsRepo = roomsRepo;
         }
 
+        /// <summary>
+        /// Creates a new booking.
+        /// </summary>
+        /// <param name="bookingRequest">The request object containing the booking details.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the bookingRequest is null.</exception>
+        /// <exception cref="ApiException">
+        /// Thrown when the category ID in the bookingRequest is invalid,
+        /// the number of guests exceeds the category's capacity,
+        /// or no rooms are available in the specified date range.
+        /// </exception>
         public async Task CreateAsync(BookingRequest bookingRequest)
         {
             if (bookingRequest == null)
@@ -59,6 +69,19 @@ namespace HotelManagementSystem.Services.Services
             await _bookingsRepo.CreateAsync(booking);
         }
 
+        /// <summary>
+        /// Retrieves a list of available rooms in a specific category within a given date range asynchronously.
+        /// </summary>
+        /// <param name="categoryId">The ID of the category to check for available rooms.</param>
+        /// <param name="startDate">The start date of the availability check.</param>
+        /// <param name="endDate">The end date of the availability check.</param>
+        /// <returns>
+        /// The task result contains a list of available rooms.
+        /// </returns>
+        /// <exception cref="ApiException">
+        /// Thrown when no rooms are added in the specified category,
+        /// or no rooms are available in the specified date range.
+        /// </exception>
         private async Task<List<Room>> GetAvailableRooms(string categoryId, DateTime startDate, DateTime endDate)
         {
             var rooms = await _roomsRepo.GetByCategoryAsync(categoryId);
@@ -78,6 +101,15 @@ namespace HotelManagementSystem.Services.Services
             return rooms.Where(r => !bookedRoomIds.Contains(r.Id)).ToList();
         }
 
+        /// <summary>
+        /// Checks if there are available rooms in a specific category within a given date range asynchronously.
+        /// </summary>
+        /// <param name="categoryId">The ID of the category to check for availability.</param>
+        /// <param name="startDate">The start date of the availability check.</param>
+        /// <param name="endDate">The end date of the availability check.</param>
+        /// <returns>
+        /// The task result contains a boolean indicating the availability of rooms.
+        /// </returns>
         public async Task<bool> IsAvailable(string categoryId, DateTime startDate, DateTime endDate)
         {
             var availableRooms = await GetAvailableRooms(categoryId, startDate, endDate);

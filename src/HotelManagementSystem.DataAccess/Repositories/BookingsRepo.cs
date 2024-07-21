@@ -14,11 +14,24 @@ namespace HotelManagementSystem.DataAccess.Repositories
             _dbContext = mongoDbContext;
         }
 
+        /// <summary>
+        /// Inserts a new booking into the database asynchronously.
+        /// </summary>
+        /// <param name="booking">The booking object to be inserted into the database.</param>
         public async Task CreateAsync(Booking booking)
         {
             await _dbContext.Bookings.InsertOneAsync(booking);
         }
 
+        /// <summary>
+        /// Retrieves a list of bookings for a specific category within a given date range asynchronously.
+        /// </summary>
+        /// <param name="categoryId">The ID of the category to retrieve bookings for.</param>
+        /// <param name="startDate">The start date of the range for which to retrieve bookings.</param>
+        /// <param name="endDate">The end date of the range for which to retrieve bookings.</param>
+        /// <returns>
+        /// The task result contains a list of bookings that match the specified criteria.
+        /// </returns>
         public async Task<List<Booking>> GetBookingsForRange(string categoryId, DateTime startDate, DateTime endDate)
         {
             var filter = Builders<Booking>.Filter.And(
