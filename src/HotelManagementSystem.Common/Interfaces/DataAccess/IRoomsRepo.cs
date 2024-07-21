@@ -6,5 +6,7 @@ namespace HotelManagementSystem.Common.Interfaces.DataAccess
     {
         Task CreateAsync(Room room);
         Task DeleteAsync(string id);
+        Task DeleteByCategoryAsync(string categoryId);
+        Task<List<Room>> GetByCategoryAsync(string categoryId);
     }
 }

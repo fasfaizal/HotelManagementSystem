@@ -9,10 +9,12 @@ namespace HotelManagementSystem.Services.Services
     public class CategoriesService : ICategoriesService
     {
         private readonly ICategoriesRepo _categoriesRepo;
+        private IRoomsRepo _roomsRepo;
 
-        public CategoriesService(ICategoriesRepo categoriesRepo)
+        public CategoriesService(ICategoriesRepo categoriesRepo, IRoomsRepo roomsRepo)
         {
             _categoriesRepo = categoriesRepo;
+            _roomsRepo = roomsRepo;
         }
 
         /// <summary>
@@ -63,6 +65,9 @@ namespace HotelManagementSystem.Services.Services
         /// <returns>A task that represents the asynchronous delete operation.</returns>
         public async Task DeleteAsync(string id)
         {
+            // Delete rooms mapped to a category
+            await _roomsRepo.DeleteByCategoryAsync(id);
+            // Delete category
             await _categoriesRepo.DeleteAsync(id);
         }
 
