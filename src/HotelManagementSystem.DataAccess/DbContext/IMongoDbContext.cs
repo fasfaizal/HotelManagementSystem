@@ -7,5 +7,6 @@ namespace HotelManagementSystem.DataAccess.DbContext
     {
         public IMongoCollection<Category> Categories { get; set; }
         public IMongoCollection<Room> Rooms { get; set; }
+        public IMongoCollection<Booking> Bookings { get; set; }
     }
 }
