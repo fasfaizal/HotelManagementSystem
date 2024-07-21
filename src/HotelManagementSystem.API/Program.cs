@@ -1,3 +1,4 @@
+using HotelManagementSystem.API.ExceptionHandlers;
 using HotelManagementSystem.Common.Configs;
 using HotelManagementSystem.Common.Interfaces.DataAccess;
 using HotelManagementSystem.Common.Interfaces.Services;
@@ -15,6 +16,10 @@ builder.Services.AddScoped<IRoomsService, RoomsService>();
 builder.Services.AddScoped<IRoomsRepo, RoomsRepo>();
 builder.Services.AddScoped<IBookingsService, BookingsService>();
 builder.Services.AddScoped<IBookingsRepo, BookingsRepo>();
+
+// Add global exception handler
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 // Add configurations
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
@@ -36,6 +41,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseExceptionHandler();
 
 app.MapControllers();
 
