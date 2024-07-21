@@ -21,5 +21,20 @@ namespace HotelManagementSystem.API.Controllers
             await _bookingsService.CreateAsync(bookingRequest);
             return Ok();
         }
+
+        [HttpGet("availability/category/{categoryId}")]
+        public async Task<IActionResult> GetAvailability(string categoryId, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            if (startDate == null)
+            {
+                startDate = DateTime.Today;
+            }
+            if (endDate == null)
+            {
+                endDate = DateTime.Today;
+            }
+            var isAvailable = await _bookingsService.IsAvailable(categoryId, startDate.Value, endDate.Value);
+            return Ok(new { isAvailable });
+        }
     }
 }

@@ -77,5 +77,15 @@ namespace HotelManagementSystem.Services.Services
             var bookedRoomIds = bookings.Select(b => b.RoomId).ToList();
             return rooms.Where(r => !bookedRoomIds.Contains(r.Id)).ToList();
         }
+
+        public async Task<bool> IsAvailable(string categoryId, DateTime startDate, DateTime endDate)
+        {
+            var availableRooms = await GetAvailableRooms(categoryId, startDate, endDate);
+            if (availableRooms == null || availableRooms.Count == 0)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
