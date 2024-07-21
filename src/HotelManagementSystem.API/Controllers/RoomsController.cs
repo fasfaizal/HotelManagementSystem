@@ -28,5 +28,19 @@ namespace HotelManagementSystem.API.Controllers
             var room = await _roomsService.CreateAsync(roomRequest);
             return Ok(room);
         }
+
+        /// <summary>
+        /// Deletes a room by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the room to delete.</param>
+        /// <returns>
+        /// A 200 OK response if the deletion is successful.
+        /// </returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _roomsService.DeleteAsync(id);
+            return Ok();
+        }
     }
 }

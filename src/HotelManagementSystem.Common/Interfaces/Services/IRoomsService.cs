@@ -6,5 +6,6 @@ namespace HotelManagementSystem.Common.Interfaces.Services
     public interface IRoomsService
     {
         Task<Room> CreateAsync(RoomRequest roomRequest);
+        Task DeleteAsync(string id);
     }
 }

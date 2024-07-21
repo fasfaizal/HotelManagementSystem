@@ -52,5 +52,14 @@ namespace HotelManagementSystem.Services.Services
             await _roomsRepo.CreateAsync(room);
             return room;
         }
+
+        /// <summary>
+        /// Deletes a room asynchronously from the repository based on its ID.
+        /// </summary>
+        /// <param name="id">The ID of the room to delete.</param>
+        public async Task DeleteAsync(string id)
+        {
+            await _roomsRepo.DeleteAsync(id);
+        }
     }
 }
