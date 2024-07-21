@@ -50,7 +50,7 @@ namespace HotelManagementSystem.API.Controllers
                 endDate = DateTime.Today;
             }
             var isAvailable = await _bookingsService.IsAvailable(categoryId, startDate.Value, endDate.Value);
-            return Ok(new { isAvailable });
+            return Ok(isAvailable);
         }
     }
 }
