@@ -11,12 +11,14 @@ namespace HotelManagementSystem.Services.Tests.Services
     public class CategoriesServiceTests
     {
         private readonly Mock<ICategoriesRepo> _mockRepo;
+        private readonly Mock<IRoomsRepo> _mockRoomsRepo;
         private readonly CategoriesService _service;
 
         public CategoriesServiceTests()
         {
             _mockRepo = new Mock<ICategoriesRepo>();
-            _service = new CategoriesService(_mockRepo.Object);
+            _mockRoomsRepo = new Mock<IRoomsRepo>();
+            _service = new CategoriesService(_mockRepo.Object, _mockRoomsRepo.Object);
         }
 
         [Fact]
