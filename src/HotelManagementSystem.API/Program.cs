@@ -13,6 +13,8 @@ builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<ICategoriesRepo, CategoriesRepo>();
 builder.Services.AddScoped<IRoomsService, RoomsService>();
 builder.Services.AddScoped<IRoomsRepo, RoomsRepo>();
+builder.Services.AddScoped<IBookingsService, BookingsService>();
+builder.Services.AddScoped<IBookingsRepo, BookingsRepo>();
 
 // Add configurations
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
