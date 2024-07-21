@@ -8,6 +8,7 @@ namespace HotelManagementSystem.DataAccess.DbContext
     public class MongoDbContext : IMongoDbContext
     {
         public IMongoCollection<Category> Categories { get; set; }
+        public IMongoCollection<Room> Rooms { get; set; }
 
         public MongoDbContext(IOptions<MongoDbSettings> settings)
         {
@@ -15,6 +16,7 @@ namespace HotelManagementSystem.DataAccess.DbContext
             var database = client.GetDatabase(settings.Value.DatabaseName);
 
             Categories = database.GetCollection<Category>("Categories");
+            Rooms = database.GetCollection<Room>("Rooms");
         }
     }
 }
