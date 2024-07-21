@@ -95,6 +95,48 @@ namespace HotelManagementSystem.Services.Tests.Services
         }
 
         [Fact]
+        public async Task IsAvailable_ShouldThrowApiException_WhenStartDateIsInThePast()
+        {
+            // Arrange
+            var categoryId = "valid-category-id";
+            var startDate = DateTime.Today.AddDays(-1);
+            var endDate = DateTime.Today.AddDays(1);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<ApiException>(() => _bookingsService.IsAvailable(categoryId, startDate, endDate));
+            Assert.Equal(HttpStatusCode.BadRequest, exception.StatusCode);
+            Assert.Equal("Start date and end date should not be in the past", exception.Message);
+        }
+
+        [Fact]
+        public async Task IsAvailable_ShouldThrowApiException_WhenEndDateIsInThePast()
+        {
+            // Arrange
+            var categoryId = "valid-category-id";
+            var startDate = DateTime.Today;
+            var endDate = DateTime.Today.AddDays(-1);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<ApiException>(() => _bookingsService.IsAvailable(categoryId, startDate, endDate));
+            Assert.Equal(HttpStatusCode.BadRequest, exception.StatusCode);
+            Assert.Equal("Start date and end date should not be in the past", exception.Message);
+        }
+
+        [Fact]
+        public async Task IsAvailable_ShouldThrowApiException_WhenStartDateIsAfterEndDate()
+        {
+            // Arrange
+            var categoryId = "valid-category-id";
+            var startDate = DateTime.Today.AddDays(2);
+            var endDate = DateTime.Today.AddDays(1);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<ApiException>(() => _bookingsService.IsAvailable(categoryId, startDate, endDate));
+            Assert.Equal(HttpStatusCode.BadRequest, exception.StatusCode);
+            Assert.Equal("Start date should be before end date", exception.Message);
+        }
+
+        [Fact]
         public async Task IsAvailable_ShouldThrowApiException_WhenNoRoomsAreAddedForCategory()
         {
             // Arrange
